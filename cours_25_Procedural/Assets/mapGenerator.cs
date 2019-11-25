@@ -55,6 +55,7 @@ public class MapGenerator : MonoBehaviour {
     public void GenerateMapWithNoise()
     {
         float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight, seed, noiseScale, octaves, persistance, lacunarity, offset);
+        float[,] noiseMap2 = Noise.GenerateNoiseMap(mapWidth, mapHeight, seed + 1, noiseScale, octaves, persistance, lacunarity, offset);
 
         TileBase[] customTileMap = new TileBase[mapWidth * mapHeight];
         for (int y = 0; y < mapHeight; y++)
@@ -62,7 +63,12 @@ public class MapGenerator : MonoBehaviour {
             for (int x = 0; x < mapWidth; x++)
             {
                 float rnd = noiseMap[x,y];
+                float rnd2 = noiseMap2[x,y];
                 customTileMap[y * mapWidth + x] = FindTileFromRegion(rnd);
+                if (rnd2 < 0.5)
+                {
+
+                }
             }
         }
         SetTileMap(customTileMap);
